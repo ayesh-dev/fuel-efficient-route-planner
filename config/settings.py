@@ -132,4 +132,4 @@ MAILERS = {
     },
 }
 
-ORS_API_KEY = "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6IjI0ZmVhYjQ0NTU2NTQ2Yjg4YjgyMDgzOWU1YTlkMDZkIiwiaCI6Im11cm11cjY0In0="
+ORS_API_KEY = "enter your key here"
