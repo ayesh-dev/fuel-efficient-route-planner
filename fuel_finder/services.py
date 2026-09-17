@@ -7,6 +7,34 @@ from .models import FuelStation
 EARTH_RADIUS_MILES = 3958.8
 
 
+def geocode_location(place_name, api_key):
+    """
+    Converts a place name (e.g. "Big Cabin, OK") into [longitude, latitude]
+    using ORS geocoding. Returns None if no match is found.
+    """
+    url = "https://api.openrouteservice.org/geocode/search"
+    params = {
+        "api_key": api_key,
+        "text": place_name,
+        "boundary.country": "US",
+        "size": 1,
+    }
+
+    response = requests.get(url, params=params, timeout=10)
+    if response.status_code != 200:
+        raise Exception(
+            f"Geocoding API error: {response.status_code} - {response.text}"
+        )
+
+    data = response.json()
+    features = data.get("features", [])
+    if not features:
+        return None
+
+    # GeoJSON coordinates are already [longitude, latitude]
+    return features[0]["geometry"]["coordinates"]
+
+
 def haversine_distance(lat1, lon1, lat2, lon2):
     """Calculate straight-line distance between two coordinates in miles."""
     dlat = math.radians(lat2 - lat1)
